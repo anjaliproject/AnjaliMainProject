@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+</head>
+{% include 'header.html' %}
+<body>
+<form id="form1" name="form1" method="post" action="">
+  <table width="466" border="1">
+    <tr>
+      <td width="91" style="color:black">Feed_id</td>
+      <td width="91" style="color:black">User name </td>
+      <td width="134" style="color:black">Feedback</td>
+      <td width="122" style="color:black">Date</td>
+      <td width="122">&nbsp;</td>
+    </tr>
+      {% for d in val %}
+    <tr>
+      <td style="color:black">{{d[0]}}</td>
+      <td style="color:black">{{d[1]}}</td>
+      <td style="color:black">{{d[2]}}</td>
+      <td style="color:black">{{d[3]}}</td>
+      <td><a href={{url_for('delete',Id=d[0])}}>delete</a></td>
+    </tr>
+      {% endfor %}
+  </table>
+</form>
+</body>
+{% include 'footer.html' %}
+</html>

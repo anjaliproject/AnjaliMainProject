@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+</head>
+{% include 'header.html' %}
+<body>
+<form id="form1" name="form1" method="post" action="">
+  <table width="694" border="1">
+    <tr>
+      <td width="49" style="color:black">Id</td>
+      <td width="71" style="color:black">Name</td>
+      <td width="76" style="color:black">City</td>
+      <td width="65" style="color:black">Age</td>
+      <td width="47" style="color:black">DOB</td>
+      <td width="60" style="color:black">Gender</td>
+      <td width="76" style="color:black">Email</td>
+      <td width="61" style="color:black">Mobile</td>
+      <td width="60" style="color:black">Photo</td>
+      <td width="60">&nbsp;</td>
+    </tr>
+
+{% for d in val %}
+    <tr>
+      <td style="color:black">{{d[0]}}</td>
+      <td style="color:black">{{d[1]}}</td>
+      <td style="color:black">{{d[2]}}</td>
+      <td style="color:black">{{d[3]}}</td>
+      <td style="color:black">{{d[4]}}</td>
+      <td style="color:black">{{d[5]}}</td>
+      <td style="color:black">{{d[6]}}</td>
+      <td style="color:black">{{d[7]}}</td>
+      <td style="color:black">{{d[8]}}</td>
+      <td style="color:black"><a href="{{url_for('block',Id=d[0])}}">Block</a></td>
+    </tr>
+     {% endfor %}
+  </table>
+</form>
+</body>
+{% include 'footer.html' %}
+</html>
