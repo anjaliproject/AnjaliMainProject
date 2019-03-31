@@ -14,12 +14,14 @@ path1="C:\\Users\\lenovo\\PycharmProjects\\My Privacy\\privacy\\static\\post"
 con=MySQLdb.connect(host='localhost',user='root',password='root',port=3306,db='project_db')
 cmd=con.cursor()
 
-@root.route('/login',methods=['GET'])
+@root.route('/login',methods=['GET','post'])
 def login():
     username=request.args.get('uname')
     password=request.args.get('pass')
+    print(username)
     cmd.execute("select * from login_tb where User_name='" + username + "' and Password='" + password + "'")
     s=cmd.fetchone()
+    print(s)
     if(s is None):
         return jsonify({'task':"invalid"})
     elif(s[3]=='user'):
@@ -30,7 +32,7 @@ def login():
     else:
         return jsonify({'task': "invalid"})
 
-@root.route('/signup')
+@root.route('/signup',methods=['POST','GET'])
 def signup():
     name=request.form['name']
     gender=request.form['gender']
@@ -51,11 +53,12 @@ def feedback():
     feed=request.args.get('feed')
     lid=request.args.get('lid')
     print(lid)
+    print("insert into feedback_tb values(null,'"+lid+"','"+feed+"',curdate())")
     cmd.execute("insert into feedback_tb values(null,'"+lid+"','"+feed+"',curdate())")
     con.commit()
     return jsonify({'task':"success"})
 
-@root.route('notification')
+@root.route('/notification',methods=['POST','GET'])
 def notification():
     cmd.execute("select * from notification_tb")
     row_headers = [x[0] for x in cmd.description]
@@ -69,7 +72,7 @@ def notification():
 
 
 
-@root.route('/profile')
+@root.route('/profile',methods=['POST','GET'])
 def profile():
     lid=request.args.get('lid')
     cmd.execute("select * from reg_tb where Login_id='"+lid+"'")
@@ -82,7 +85,7 @@ def profile():
     print(json_data)
     return jsonify(json_data)
 
-@root.route('/post_photos')
+@root.route('/post_photos',methods=['POST','GET'])
 def post_photos():
     photo = request.files['files']
     fname1 = secure_filename(photo.filename)
@@ -92,7 +95,7 @@ def post_photos():
     con.commit()
     return jsonify({'task':"success"})
 
-@root.route('/view_friends')
+@root.route('/view_friends',methods=['POST','GET'])
 def view_friends():
     cmd.execute("select * from friends_tb")
     row_headers = [x[0] for x in cmd.description]
@@ -104,7 +107,7 @@ def view_friends():
     print(json_data)
     return jsonify(json_data)
 
-@root.route('/view_gallery')
+@root.route('/view_gallery',methods=['POST','GET'])
 def view_gallery():
     cmd.execute("select * from gallery")
     row_headers = [x[0] for x in cmd.description]
@@ -116,7 +119,7 @@ def view_gallery():
     print(json_data)
     return jsonify(json_data)
 
-@root.route('/view_frequest')
+@root.route('/view_frequest',methods=['POST','GET'])
 def view_frequest():
     cmd.execute("select * from friends_tb")
     row_headers = [x[0] for x in cmd.description]
@@ -128,7 +131,7 @@ def view_frequest():
     print(json_data)
     return jsonify(json_data)
 
-@root.route('/timeline')
+@root.route('/timeline',methods=['POST','GET'])
 def timeline():
     cmd.execute("select * from post_tb")
     row_headers = [x[0] for x in cmd.description]
@@ -140,20 +143,44 @@ def timeline():
     print(json_data)
     return jsonify(json_data)
 
-@root.route('/accept_request')
+@root.route('/accept_request',methods=['POST','GET'])
 def accept_request():
     f_id=request.args.get('f_id')
     cmd.execute("update friends_tb set status='Accepted' where Friend_id='"+f_id+"' ")
     con.commit()
     return jsonify({'task':"success"})
-@root.route('/reject_request')
+@root.route('/reject_request',methods=['POST','GET'])
 def reject_request():
     f_id=request.args.get('f_id')
     cmd.execute("update friends_tb set status='Rejected' where Friend_id='" + f_id + "' ")
     con.commit()
     return jsonify({'task': "success"})
 
-@root.route('/forgot_pw')
+@root.route('/send_request')
+def send_request():
+    id=request.args.get('lid')
+    cmd.execute("SELECT * FROM `reg_tb` WHERE `U_id` NOT IN (SELECT `User_id` FROM `friends_tb` WHERE `Friend_id`='"+str(id)+"') OR `U_id` NOT IN (SELECT `Friend_id` FROM `friends_tb` WHERE `User_id`='"+str(id)+"')")
+    row_headers = [x[0] for x in cmd.description]
+    results = cmd.fetchall()
+    json_data = []
+    for result in results:
+        json_data.append(dict(zip(row_headers, result)))
+    con.commit()
+    print(json_data)
+    return jsonify(json_data)
+
+@root.route('/f_request',methods=['POST','GET'])
+def f_request():
+    lid= request.args.get('User_id')
+    fid= request.args.get('Friend_id')
+    status = request.args.get('Status')
+    cmd.execute("insert into friends_tb values(null,'"+lid+"','"+fid+"','"+status+"')")
+    con.commit()
+    return jsonify({'task': "success"})
+
+
+
+@root.route('/forgot_pw',methods=['POST','GET'])
 def forgot_pw():
     uname=request.args.get['uname']
     email=request.args.get['email']
@@ -163,7 +190,7 @@ def forgot_pw():
 
 
 if __name__ == "__main__":
-    root.run(host="0.0.0.0", port=5000)
+    root.run(host="192.168.43.235", port=5000)
 
 
 
