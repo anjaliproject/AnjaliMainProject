@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Gallery;
 
 public class User_home extends Activity {
 	
@@ -80,7 +81,7 @@ public class User_home extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				
-				Intent i=new Intent(getApplicationContext(),View_friend_Requsets.class);
+				Intent i=new Intent(getApplicationContext(),View_friend_Request.class);
 				startActivity(i);
 				
 				
@@ -119,6 +120,9 @@ public class User_home extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				Intent i=new Intent(getApplicationContext(),View_Gallery.class);
+				startActivity(i);
+				
 				
 			}
 		});
@@ -129,6 +133,8 @@ public class User_home extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				Intent i=new Intent(getApplicationContext(),Post_photos.class);
+				startActivity(i);
 				
 			}
 		});
@@ -140,18 +146,25 @@ public class User_home extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				
-			}
-		});
-		
-		b11=(Button)findViewById(R.id.button11);
-		b11.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+				Intent i=new Intent(getApplicationContext(),Notification.class);
+				startActivity(i);
+				
 				
 			}
 		});
+//		
+//	    b11=(Button)findViewById(R.id.button11);
+//		b11.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View arg0) {
+//				// TODO Auto-generated method stub
+//				Intent i=new Intent(getApplicationContext(),Photo_notification.class);
+//				startActivity(i);
+//				
+//				
+//			}
+//		});
 		
 		b12=(Button)findViewById(R.id.button12);
 		b12.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +172,10 @@ public class User_home extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				
+				Intent i=new Intent(getApplicationContext(),Login.class);
+				startActivity(i);
+				
 				
 			}
 		});

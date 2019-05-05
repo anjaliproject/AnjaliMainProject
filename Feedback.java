@@ -74,9 +74,9 @@ import android.widget.Toast;
 				params.add(new BasicNameValuePair("feed", feed));
 				params.add(new BasicNameValuePair("lid", sh.getString("lid", "0")));
 		           
-	            JSONObject jobj=null;
+            JSONObject jobj=null;
 				try {
-					jobj = (JSONObject)jsonParser.makeHttpRequest(url,"GET", params);
+					 jobj = (JSONObject)jsonParser.makeHttpRequest(url,"GET", params);
 				} catch (JSONException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -5,6 +5,8 @@ package com.example.myprivacy;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -23,14 +25,14 @@ public class Custom extends BaseAdapter{
 	private Context Context;
 	ArrayList<String> a,b;
 	
-	SharedPreferences sp;
+	SharedPreferences sh;
 	
 	public Custom(Context applicationContext, ArrayList<String> x,ArrayList<String> y) {
 		this.Context=applicationContext;
 		this.a=x;
 		this.b=y;
 
-		sp=PreferenceManager.getDefaultSharedPreferences(applicationContext);
+		sh=PreferenceManager.getDefaultSharedPreferences(applicationContext);
 	}
 
 	@Override
@@ -72,15 +74,16 @@ public class Custom extends BaseAdapter{
 		TextView tv1=(TextView)gridView.findViewById(R.id.textView1);	
 		ImageView img=(ImageView)gridView.findViewById(R.id.imageView1);
 		
-			
+
+       
 		tv1.setTextColor(Color.BLACK);
 		
 		
-		tv1.setText(a.get(position));
+		tv1.setText(b.get(position));
 		
 		java.net.URL thumb_u;
 		try {
-			thumb_u = new java.net.URL("http://"+sp.getString("ip", "")+":5000/static/Photos/"+b.get(position));
+			thumb_u = new java.net.URL("http://"+sh.getString("ip", "")+":5000/static/image/"+a.get(position)+"/"+a.get(position)+".jpg");
 			Drawable thumb_d = Drawable.createFromStream(thumb_u.openStream(), "src");
 			img.setImageDrawable(thumb_d);
 			

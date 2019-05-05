@@ -19,12 +19,13 @@ import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-@SuppressLint("NewApi") public class Login extends Activity {
+@SuppressLint("NewApi") public class Login extends Activity implements OnClickListener {
 EditText e1,e2;
 Button b1,b2;
 TextView t1;
@@ -119,7 +120,7 @@ public static String url="";
 		});
         t1=(TextView)findViewById(R.id.textView1);
         
-        
+        t1.setOnClickListener(this);
         
         
     }
@@ -131,5 +132,15 @@ public static String url="";
         getMenuInflater().inflate(R.menu.login, menu);
         return true;
     }
+
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		Intent i=new Intent(getApplicationContext(),Forgot_Password.class);
+		startActivity(i);
+		
+		
+	}
     
 }

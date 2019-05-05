@@ -65,7 +65,6 @@ public class Send_Request extends Activity implements OnItemClickListener {
         	name=new ArrayList<String>();
         	 lid=new ArrayList<String>();
             photo=new ArrayList<String>();
-            
             f_id=new ArrayList<String>();
           
 
@@ -85,7 +84,7 @@ public class Send_Request extends Activity implements OnItemClickListener {
         
         }
        
-		LV11.setAdapter(new Custom(Send_Request.this, name,photo));
+		LV11.setAdapter(new Custom(Send_Request.this, lid,name));
 	}
 
 	@Override
@@ -99,30 +98,30 @@ public class Send_Request extends Activity implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
 		
-		
+		pos=arg2;
 		 AlertDialog.Builder alert = new AlertDialog.Builder(Send_Request.this);
 
 	        alert.setTitle("Send Request");
 
 
-	        alert.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
+	        alert.setPositiveButton("Add Friend", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int whichButton) {
 	                try {
 
 	                    List<NameValuePair> params = new ArrayList<NameValuePair>();
-	                    params.add(new BasicNameValuePair("User_id", lid.get(pos)));
-	                    params.add(new BasicNameValuePair("Friend_id", f_id.get(pos)));
-	                    url = "http://"+ip+":5000/f_request";
+	                    params.add(new BasicNameValuePair("User_id", sh.getString("lid", "")));
+	                    params.add(new BasicNameValuePair("Friend_id", lid.get(pos)));
+	                    url = "http://"+sh.getString("ip", "")+":5000/f_request";
+//	                    Toast.makeText(getApplicationContext(),url, Toast.LENGTH_LONG).show();
 
-	                    Log.d("ins===", url);
 	                    JSONObject jobj = null;
 	                    jobj = (JSONObject) jsonParser.makeHttpRequest(url, "GET", params);
 	                    String ss = jobj.getString("task");
 	                    Log.d("Msg++++++++++++++++", ss);
-	                    if (ss.equals("done")) {
+	                    if (ss.equals("success")) {
 
 
-	                        Toast.makeText(getApplicationContext(), "location added", Toast.LENGTH_LONG).show();
+	                        Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_LONG).show();
 	                        Intent i = new Intent(getApplicationContext(), Send_Request.class);
 	                        startActivity(i);
 
@@ -131,7 +130,7 @@ public class Send_Request extends Activity implements OnItemClickListener {
 
 	                    }
 	                } catch (Exception e) {
-	                    Log.d("==============", "" + e);
+	                    
 	                    Toast.makeText(getApplicationContext(), "err"+e, Toast.LENGTH_LONG).show();
 	                }
 
@@ -140,26 +139,15 @@ public class Send_Request extends Activity implements OnItemClickListener {
 	            }
 	        });
 
-	        alert.setNegativeButton("Cancelt", new DialogInterface.OnClickListener() {
+	        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int whichButton) {
 	                // Canceled.
-	                try {
+	            	
+	            	
+	            	 Intent i = new Intent(getApplicationContext(), User_home.class);
+                     startActivity(i);
 
-	                    List<NameValuePair> params = new ArrayList<NameValuePair>();
-	                    params.add(new BasicNameValuePair("User_id", lid.get(pos)));
-	                    params.add(new BasicNameValuePair("Friend_id", lid.get(pos)));
-	                    url = "http://" + ip + ":5000/f_request";
-
-	                    Log.d("ins===", url);
-	                    JSONObject jobj = null;
-	                    jobj = (JSONObject) jsonParser.makeHttpRequest(url, "GET", params);
-	                    String ss = jobj.getString("task");
-	                    Log.d("Msg++++++++++++++++", ss);
-
-	                } catch (Exception e) {
-	                    Log.d("==============", "" + e);
-	                }
-
+	              
 	            }
 	        });
 
