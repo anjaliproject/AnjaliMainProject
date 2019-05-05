@@ -12,7 +12,7 @@ class add_face:
     def add_face(self,img):
         try:
             # Replace <Subscription Key> with your valid subscription key.
-            subscription_key = "0e5d410651504ace8c66169765c6bea2"
+            subscription_key = "30831a43b05b42fcbf5cfd5fbbdd5ffc"
             assert subscription_key
 
             face_api_url = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect'
@@ -40,8 +40,8 @@ class add_face:
             response = requests.post(face_api_url, headers=headers,params=params, data=image_data)
             response.raise_for_status()
             faces = response.json()
-            print("res=========",response)
-            print("face=========", faces)
+            # print("res=========",response)
+            # print("face=========", faces)
             # analysis
 
             # print("faces is---"+str(faces))
@@ -74,7 +74,8 @@ class add_face:
 
             print("fid is----"+str(fid))
             return fid
-        except:
+        except Exception as e:
+            print(e)
             return '1234567890'
 # t=add_face()
 # t.add_face("static/images/ANIS.jpg")
